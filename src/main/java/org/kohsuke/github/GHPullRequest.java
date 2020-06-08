@@ -530,6 +530,36 @@ public class GHPullRequest extends GHIssue implements Refreshable {
     }
 
     /**
+     * Create multi-line review comment gh pull request review comment.
+     *
+     * @param body      the body
+     * @param sha       the sha
+     * @param path      the path
+     * @param startLine the start line
+     * @param endLine   the end line
+     * @return the gh pull request review comment
+     * @throws IOException the io exception
+     * @author Tasuku Nakagagw
+     */
+    public GHPullRequestReviewComment createMultiLineReviewComment(String body, String sha, String path,
+                                                                   int startLine, int endLine)
+        throws IOException {
+        return root.createRequest()
+            .method("POST")
+            .withHeader("Accept", "application/vnd.github.comfort-fade-preview+json")
+            .with("body", body)
+            .with("commit_id", sha)
+            .with("path", path)
+            .with("side", "RIGHT")
+            .with("start_side", "RIGHT")
+            .with("start_line", startLine)
+            .with("line", endLine)
+            .withUrlPath(getApiRoute() + COMMENTS_ACTION)
+            .fetch(GHPullRequestReviewComment.class)
+            .wrapUp(this);
+    }
+
+    /**
      * Request reviewers.
      *
      * @param reviewers
