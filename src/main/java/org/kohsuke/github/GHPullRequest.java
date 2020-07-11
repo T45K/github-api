@@ -538,6 +538,9 @@ public class GHPullRequest extends GHIssue implements Refreshable {
      *            the sha
      * @param path
      *            the path
+     * @param side
+     *            the side
+     * @parm startSide the start side
      * @param startLine
      *            the start line
      * @param endLine
@@ -550,6 +553,8 @@ public class GHPullRequest extends GHIssue implements Refreshable {
     public GHPullRequestReviewComment createMultiLineReviewComment(String body,
             String sha,
             String path,
+            String side,
+            String startSide,
             int startLine,
             int endLine) throws IOException {
         return root.createRequest()
@@ -558,8 +563,8 @@ public class GHPullRequest extends GHIssue implements Refreshable {
                 .with("body", body)
                 .with("commit_id", sha)
                 .with("path", path)
-                .with("side", "RIGHT")
-                .with("start_side", "RIGHT")
+                .with("side", side)
+                .with("start_side", startSide)
                 .with("start_line", startLine)
                 .with("line", endLine)
                 .withUrlPath(getApiRoute() + COMMENTS_ACTION)
